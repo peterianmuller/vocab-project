@@ -1,0 +1,18 @@
+{
+  "name": "nba-data-tables",
+  "version": "1.0.0",
+  "description": "This small app is going to query to http://data.nba.net/ API and make some tables of data in order to practice creation and styling of tables.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "jquery": "^3.3.1"
+  }
+}
