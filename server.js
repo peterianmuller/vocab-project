@@ -2,28 +2,30 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var axios = require('axios');
+var parser = require('xml2json');
 
 app.use(bodyParser.json());
+
+let key = require('./config').keyWebsterSpanish;
+console.log(key);
 
 app.use(express.static(`${__dirname}/public`));
 
 var teams = [];
 
-app.get('/nba', (req, res) => {
+app.get('/lookup', (req, res) => {
+	console.log(req);
 	console.log('right route');
 	axios
-		.get('http://data.nba.net/data/10s/prod/v1/2017/players.json', {
-			headers: {
-				// not sure why/if we need this!
-				// 'Access-Control-Allow-Origin': '*',
-				// 'Content-Type': 'application/json;charset=UTF-8'
-			}
-		})
+		.get(`https://www.dictionaryapi.com/api/v1/references/spanish/xml/${req.query.word}?key=${key}`)
 		.catch(function(error) {
 			console.log(`error is: ${error}`);
 		})
 		.then(response => {
-			res.send(response.data.league.standard);
+			var json = parser.toJson(response.data);
+			console.log(json);
+			//res.send(response);
+			res.send(json);
 		});
 });
 
