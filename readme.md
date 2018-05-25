@@ -1,7 +1,3 @@
-This small app is going to query to http://data.nba.net/ API and make some tables of data in order to practice creation and styling of tables.
+This small app is going to query to the Merriam Webster Dictionary API in order to provide a way to look up vocabulary and eventually persist it.
 
-We'll first set up a basic page that has a single button that will get back data and display certaiun data points about the first 5 players.
-
-We'll then have a more advanced feature that will enable to user to request data on a certain player!
-
-Woooooooo Able to grab API data!
+The goal here is to practice dealing with API response payload and dynamically created markup.
