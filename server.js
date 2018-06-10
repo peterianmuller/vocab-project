@@ -3,25 +3,38 @@ var app = express();
 var bodyParser = require('body-parser');
 var axios = require('axios');
 var parser = require('xml2json');
+let Dictionary = require('oxford-dictionary');
 
 app.use(bodyParser.json());
 app.use(express.static(`${__dirname}/public`));
 
-let keySpan = require('./config').keyWebsterSpanish;
-let keyEng = require('./config').keyWebsterEng;
+let appId = require('./config').appId;
+let appKey = require('./config').appKey;
+
+let config = {
+	app_id: appId,
+	app_key: appKey,
+	source_lang: 'en'
+};
+
+var dict = new Dictionary(config);
 
 app.get('/lookup', (req, res) => {
-	console.log(req);
-	console.log('right route');
-	axios
-		.get(`https://www.dictionaryapi.com/api/v1/references/collegiate/xml/${req.query.word}?key=${keyEng}`)
-		.catch(function(error) {
-			console.log(`error is: ${error}`);
-		})
-		.then(response => {
-			var json = parser.toJson(response.data);
-			res.send(json);
-		});
+	console.log(req.query.word.toLowerCase());
+	var lookup = dict.definitions(req.query.word.toLowerCase());
+	console.log(`lookup is: ${lookup}`);
+	lookup.then(
+		function(response) {
+			console.log(`response is: ${response}`);
+			for (var i = 0; i < response.results[0].lexicalEntries.length; i++) {
+				console.log(response.results[0].lexicalEntries[i].entries[0].senses[0].definitions);
+			}
+			res.json(response.results);
+		},
+		function(err) {
+			console.log(err);
+		}
+	);
 });
 
 var server = app.listen(8080);
