@@ -29,7 +29,11 @@ app.get('/lookup', (req, res) => {
 			for (var i = 0; i < response.results[0].lexicalEntries.length; i++) {
 				console.log(response.results[0].lexicalEntries[i].entries[0].senses[0].definitions[0].definitions);
 			}
-			res.json(response.results);
+			var examples = dict.examples(req.query.word.toLowerCase());
+			examples.then(function(examplesResponse) {
+				var examplesAndDef = response.results.concat(examplesResponse);
+				res.json(examplesAndDef);
+			});
 		},
 		function(err) {
 			console.log(err);
