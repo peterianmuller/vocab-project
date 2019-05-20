@@ -1,5 +1,4 @@
-This small app is going to query to the Merriam Webster Dictionary API in order to provide a way to look up vocabulary and eventually persist it.
+This app is meant to be a way to learn and practice using new vocabulary. Currently, we are using an awesome [NodeJS wrapper for using the oxford dictionary api](https://www.npmjs.com/package/oxford-dictionary).
 
-The goal here is to practice dealing with API response payload and dynamically created markup.
+As an mvp, this app should allow users to look up definitions and usages of new vocabulary words. There will then be a second part of the application added that will use the words that have been looked up in a quiz of some sort.
 
-Idea here is to be able to save all these words that I've been accumulating throughout reading. Many apps exist to look up words, but I'd like to create one that saves the words I'm interested in remembering. 
