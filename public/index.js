@@ -22,7 +22,6 @@ $('button:first-of-type').click(e => {
 				data[0].lexicalEntries[0].lexicalCategory,
 				data[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
 			);
-			// let word = $;
 			let partOfSpeechElement = $('<span>', {
 				class: 'part-of-speech',
 				text: `${word[0].toUpperCase() + word.slice(1)}: (${data[0].lexicalEntries[0].lexicalCategory.toLowerCase()}). `
@@ -33,9 +32,13 @@ $('button:first-of-type').click(e => {
 					data[0].lexicalEntries[0].entries[0].senses[0].definitions[0][0].toUpperCase() +
 					data[0].lexicalEntries[0].entries[0].senses[0].definitions[0].slice(1)
 			});
-			$(`.words-container`).append(partOfSpeechElement);
-			$(`.words-container`).append(defElement);
-			$(`.words-container`).append($('<br></br>'));
+			let wordContainer = $('<section>', {
+				class: 'word-container'
+			});
+			wordContainer.append(partOfSpeechElement);
+			wordContainer.append(defElement);
+			wordContainer.append($('<br></br>'));
+			$(`.words-container`).append(wordContainer);
 		}
 	});
 });
