@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var axios = require('axios');
+var path = require('path');
 let Dictionary = require('oxford-dictionary');
 
 app.use(bodyParser.json());
@@ -38,6 +39,7 @@ app.get('/lookup', (req, res) => {
 			});
 		},
 		err => {
+			res.send(err);
 			console.log(`err is: ${err}`);
 		}
 	);

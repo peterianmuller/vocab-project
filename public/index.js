@@ -19,10 +19,11 @@ $('button:first-of-type').click(e => {
 		contentType: 'application/json',
 		success: data => {
 			replacePlacerholderText();
+			console.log('data is:', data);
 
 			// deinfition object vars
 			let definitionInfo = data[0];
-			let listOfDefinitions = definitionInfo.lexicalEntries;
+			let listOfExamples = definitionInfo.lexicalEntries;
 
 			// examples object vars
 			let examplesInfo = data[1];
@@ -32,6 +33,9 @@ $('button:first-of-type').click(e => {
 			// wordInfo.lexicalEntries is an array with objects for each part of speech
 			// need function to parse each lexical entry. Each lexical entry is an object
 			// reassign the placeholder to the original placeholder attribute of the text input
+
+			// Need to write code to parse response from API
+			// Need to write code to create markup to present resposne from API to screen
 
 			let partOfSpeechElement = $('<span>', {
 				class: 'part-of-speech',
@@ -50,6 +54,13 @@ $('button:first-of-type').click(e => {
 			wordContainer.append(defElement);
 			wordContainer.append($('<br></br>'));
 			$(`.words-container`).append(wordContainer);
+		},
+		error: err => {
+			console.log('error is:', err);
+			// this is the error
+			replacePlacerholderText();
+			let error = $('<p>Spelling error! Please try again.</p>');
+			$(`.words-container`).append(error);
 		}
 	});
 });
