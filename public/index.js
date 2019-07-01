@@ -5,8 +5,10 @@ const parseResponse = resData => {};
 
 $('button:first-of-type').click(e => {
 	let word = $(`input[name*='word']`).val();
+	// reassign the text to loading
 	$(`input[name*='word']`).val('loading...');
 	console.log('click');
+
 	$.ajax({
 		method: 'GET',
 		data: {
@@ -16,12 +18,10 @@ $('button:first-of-type').click(e => {
 		dataType: 'json',
 		contentType: 'application/json',
 		success: data => {
-			console.log(data);
-			$(`input[name*='word']`).val($(`input[name*='word']`).attr('placeholder'));
-			console.log(
-				data[0].lexicalEntries[0].lexicalCategory,
-				data[0].lexicalEntries[0].entries[0].senses[0].definitions[0]
-			);
+			//console.log('data[0] is: ', data[0]);
+			// reassign the placeholder to the original placeholder attribute of the text input
+			replacePlacerholderText();
+
 			let partOfSpeechElement = $('<span>', {
 				class: 'part-of-speech',
 				text: `${word[0].toUpperCase() + word.slice(1)}: (${data[0].lexicalEntries[0].lexicalCategory.toLowerCase()}). `
@@ -42,3 +42,7 @@ $('button:first-of-type').click(e => {
 		}
 	});
 });
+
+replacePlacerholderText = () => {
+	$(`input[name*='word']`).val($(`input[name*='word']`).attr('placeholder'));
+};
