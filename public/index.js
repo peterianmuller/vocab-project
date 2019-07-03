@@ -16,6 +16,11 @@ $('button:first-of-type').click(e => {
 		dataType: 'json',
 		contentType: 'application/json',
 		success: data => {
+			// TODO: examples
+			// examples object vars
+			let examplesInfo = data[1];
+			let listOfDefinitions = examplesInfo.lexicalEntries;
+
 			replacePlacerholderText();
 			//console.log('data is:', data);
 
@@ -24,39 +29,71 @@ $('button:first-of-type').click(e => {
 			console.log('definitionInfo is:', definitionInfo);
 			let listOfExamples = definitionInfo.lexicalEntries;
 
+			partOfSpeechElement = partOfSpeechStr => {
+				console.log('partOfSpeechStr is', partOfSpeechStr);
+				return $('<span>', {
+					class: 'part-of-speech',
+					text: partOfSpeechStr.toLowerCase() + ': '
+				});
+			};
+
+			definitionElement = definitionStr => {
+				return $('<span>', {
+					class: 'definition',
+					text: definitionStr + ' '
+				});
+			};
+
+			wordContainerElement = word => {
+				return $('<section>', {
+					class: 'word-container'
+				});
+			};
+
 			const parseDefinitionsResponse = definitionsResponse => {
 				// prettier-ignore
 				// declare var word pointing to definitionsResponse.word
 				let word = definitionsResponse.word;
+				let wordContainerMarkup = wordContainerElement(word);
+
 				// iterate over definitionInfo.lexicalEntries
 				let lexicalEntries = definitionInfo.lexicalEntries;
 				// for each lexicalEntry
 				// prettier-ignore
-				lexicalEntries.forEach(lexicalEntry => {// prettier-ignore
+				console.log('lexicalEntries are:', lexicalEntries);
+				lexicalEntries.forEach(lexicalEntry => {
+					// prettier-ignore
 					// declare local variable partOfSpeech pointing to lexicalEntry.lexicalCategory
 					let partOfSpeech = lexicalEntry.lexicalCategory;
+					console.log('partOfSpeech is:', partOfSpeech);
 					// iterare over lexicalEntry.entires
 					let entries = lexicalEntry.entries;
 					// for each entry
-					entries.forEach(entry=>{
+					entries.forEach(entry => {
 						// iterate over entires
 						// for each entry
 						let senses = entry.senses;
-							// iterate over entry.senses
-							entry.senses.forEach(sense=>{
-							// for each sense 
+						// iterate over entry.senses
+						entry.senses.forEach(sense => {
+							// for each sense
 							// iterate over definitions
 							let definitions = sense.definitions;
 							// for each definitions
-								definitions.forEach(definition=>{
-									// declare variable definition pointing to current element in definitions array
-									definition = addPeriod(definition);
-									console.log(`${word} (${partOfSpeech}) ${definition}`);
-								});
-							})
-					})
-
+							definitions.forEach(definition => {
+								// declare variable definition pointing to current element in definitions array
+								definition = addPeriod(definition);
+								console.log('partOfSpeech is:', partOfSpeech);
+								let partOfSpeechMarkup = partOfSpeechElement(partOfSpeech);
+								let definitionMarkup = definitionElement(definition);
+								wordContainerMarkup.append(partOfSpeechMarkup);
+								wordContainerMarkup.append(definitionMarkup);
+								wordContainerMarkup.append($('<br></br>'));
+								console.log(`${word} (${partOfSpeech}) ${definition}`);
+							});
+						});
+					});
 				});
+				$(`.words-container`).append(wordContainerMarkup);
 			};
 
 			addPeriod = str => {
@@ -65,27 +102,21 @@ $('button:first-of-type').click(e => {
 
 			parseDefinitionsResponse(definitionInfo);
 
-			// examples object vars
-			let examplesInfo = data[1];
-			let listOfDefinitions = examplesInfo.lexicalEntries;
+			// old:
+			// let defElement = $('<span>', {
+			// 	class: 'definition',
+			// 	text:
+			// 		data[0].lexicalEntries[0].entries[0].senses[0].definitions[0][0].toUpperCase() +
+			// 		data[0].lexicalEntries[0].entries[0].senses[0].definitions[0].slice(1)
+			// });
 
-			let partOfSpeechElement = $('<span>', {
-				class: 'part-of-speech',
-				text: `${word[0].toUpperCase() + word.slice(1)}: (${data[0].lexicalEntries[0].lexicalCategory.toLowerCase()}). `
-			});
-			let defElement = $('<span>', {
-				class: 'definition',
-				text:
-					data[0].lexicalEntries[0].entries[0].senses[0].definitions[0][0].toUpperCase() +
-					data[0].lexicalEntries[0].entries[0].senses[0].definitions[0].slice(1)
-			});
-			let wordContainer = $('<section>', {
-				class: 'word-container'
-			});
-			wordContainer.append(partOfSpeechElement);
-			wordContainer.append(defElement);
-			wordContainer.append($('<br></br>'));
-			$(`.words-container`).append(wordContainer);
+			// let wordContainer = $('<section>', {
+			// 	class: 'word-container'
+			// });
+			//wordContainer.append(partOfSpeechElement);
+			// wordContainer.append(defElement);
+			// wordContainer.append($('<br></br>'));
+			// $(`.words-container`).append(wordContainer);
 		},
 		error: err => {
 			console.log('error is:', err);
