@@ -21,7 +21,7 @@ $('button:first-of-type').click(e => {
 
 			// deinfition object vars
 			let definitionInfo = data[0];
-			//console.log('definitionInfo is:', definitionInfo);
+			console.log('definitionInfo is:', definitionInfo);
 			let listOfExamples = definitionInfo.lexicalEntries;
 
 			const parseDefinitionsResponse = definitionsResponse => {
@@ -50,13 +50,19 @@ $('button:first-of-type').click(e => {
 							// for each definitions
 								definitions.forEach(definition=>{
 									// declare variable definition pointing to current element in definitions array
-									console.log(definition);
+									definition = addPeriod(definition);
+									console.log(`${word} (${partOfSpeech}) ${definition}`);
 								});
 							})
 					})
 
 				});
 			};
+
+			addPeriod = str => {
+				return str.charAt(str.length - 1) === '.' ? str : (str += '.');
+			};
+
 			parseDefinitionsResponse(definitionInfo);
 
 			// examples object vars
