@@ -17,30 +17,47 @@ $('button:first-of-type').click(e => {
 		contentType: 'application/json',
 		success: data => {
 			replacePlacerholderText();
-			console.log('data is:', data);
+			//console.log('data is:', data);
 
 			// deinfition object vars
 			let definitionInfo = data[0];
-			console.log('definitionInfo is:', definitionInfo);
+			//console.log('definitionInfo is:', definitionInfo);
 			let listOfExamples = definitionInfo.lexicalEntries;
 
 			const parseDefinitionsResponse = definitionsResponse => {
 				// prettier-ignore
 				// declare var word pointing to definitionsResponse.word
+				let word = definitionsResponse.word;
 				// iterate over definitionInfo.lexicalEntries
+				let lexicalEntries = definitionInfo.lexicalEntries;
 				// for each lexicalEntry
+				// prettier-ignore
+				lexicalEntries.forEach(lexicalEntry => {// prettier-ignore
 					// declare local variable partOfSpeech pointing to lexicalEntry.lexicalCategory
+					let partOfSpeech = lexicalEntry.lexicalCategory;
 					// iterare over lexicalEntry.entires
+					let entries = lexicalEntry.entries;
 					// for each entry
+					entries.forEach(entry=>{
 						// iterate over entires
 						// for each entry
+						let senses = entry.senses;
 							// iterate over entry.senses
+							entry.senses.forEach(sense=>{
 							// for each sense 
-							 // iterate over definitions
-							 // for each definitions
-							 		// declare variable definition pointing to current element in definitions array
+							// iterate over definitions
+							let definitions = sense.definitions;
+							// for each definitions
+								definitions.forEach(definition=>{
+									// declare variable definition pointing to current element in definitions array
+									console.log(definition);
+								});
+							})
+					})
 
+				});
 			};
+			parseDefinitionsResponse(definitionInfo);
 
 			// examples object vars
 			let examplesInfo = data[1];
