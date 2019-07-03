@@ -2,3 +2,5 @@ This app is meant to be a way to learn and practice using new vocabulary. Curren
 
 As an mvp, this app should allow users to look up definitions and usages of new vocabulary words. There will then be a second part of the application added that will use the words that have been looked up in a quiz of some sort.
 
+Need to write code to parse response from API
+Need to write code to create markup to present resposne from API to screen

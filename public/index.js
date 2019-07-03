@@ -1,8 +1,6 @@
 // Response data is array
 // the meat of the info is in response.lexicalEntries
 
-const parseResponse = resData => {};
-
 $('button:first-of-type').click(e => {
 	let word = $(`input[name*='word']`).val();
 	// reassign the text to loading
@@ -23,19 +21,30 @@ $('button:first-of-type').click(e => {
 
 			// deinfition object vars
 			let definitionInfo = data[0];
+			console.log('definitionInfo is:', definitionInfo);
 			let listOfExamples = definitionInfo.lexicalEntries;
+
+			const parseDefinitionsResponse = definitionsResponse => {
+				// prettier-ignore
+				// declare var word pointing to definitionsResponse.word
+				// iterate over definitionInfo.lexicalEntries
+				// for each lexicalEntry
+					// declare local variable partOfSpeech pointing to lexicalEntry.lexicalCategory
+					// iterare over lexicalEntry.entires
+					// for each entry
+						// iterate over entires
+						// for each entry
+							// iterate over entry.senses
+							// for each sense 
+							 // iterate over definitions
+							 // for each definitions
+							 		// declare variable definition pointing to current element in definitions array
+
+			};
 
 			// examples object vars
 			let examplesInfo = data[1];
 			let listOfDefinitions = examplesInfo.lexicalEntries;
-
-			// wordInfo: {id: "fight", language: "en", lexicalEntries: Array(2), type: "headword", word: "fight"}
-			// wordInfo.lexicalEntries is an array with objects for each part of speech
-			// need function to parse each lexical entry. Each lexical entry is an object
-			// reassign the placeholder to the original placeholder attribute of the text input
-
-			// Need to write code to parse response from API
-			// Need to write code to create markup to present resposne from API to screen
 
 			let partOfSpeechElement = $('<span>', {
 				class: 'part-of-speech',
