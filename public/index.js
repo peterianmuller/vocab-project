@@ -29,27 +29,6 @@ $('button:first-of-type').click(e => {
 			console.log('definitionInfo is:', definitionInfo);
 			let listOfExamples = definitionInfo.lexicalEntries;
 
-			partOfSpeechElement = partOfSpeechStr => {
-				console.log('partOfSpeechStr is', partOfSpeechStr);
-				return $('<span>', {
-					class: 'part-of-speech',
-					text: partOfSpeechStr.toLowerCase() + ': '
-				});
-			};
-
-			definitionElement = definitionStr => {
-				return $('<span>', {
-					class: 'definition',
-					text: definitionStr + ' '
-				});
-			};
-
-			wordContainerElement = word => {
-				return $('<section>', {
-					class: 'word-container'
-				});
-			};
-
 			const parseDefinitionsResponse = definitionsResponse => {
 				// prettier-ignore
 				// declare var word pointing to definitionsResponse.word
@@ -101,22 +80,6 @@ $('button:first-of-type').click(e => {
 			};
 
 			parseDefinitionsResponse(definitionInfo);
-
-			// old:
-			// let defElement = $('<span>', {
-			// 	class: 'definition',
-			// 	text:
-			// 		data[0].lexicalEntries[0].entries[0].senses[0].definitions[0][0].toUpperCase() +
-			// 		data[0].lexicalEntries[0].entries[0].senses[0].definitions[0].slice(1)
-			// });
-
-			// let wordContainer = $('<section>', {
-			// 	class: 'word-container'
-			// });
-			//wordContainer.append(partOfSpeechElement);
-			// wordContainer.append(defElement);
-			// wordContainer.append($('<br></br>'));
-			// $(`.words-container`).append(wordContainer);
 		},
 		error: err => {
 			console.log('error is:', err);

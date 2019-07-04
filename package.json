@@ -1,8 +1,8 @@
 {
-  "name": "nba-data-tables",
+  "name": "vocab project",
   "version": "1.0.0",
-  "description": "This small app is going to query to http://data.nba.net/ API and make some tables of data in order to practice creation and styling of tables.",
-  "main": "index.js",
+  "description": "Gathering information about vocabulary words via Merriam Webster Dictionary API",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
