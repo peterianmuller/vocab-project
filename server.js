@@ -3,46 +3,28 @@ var app = express();
 var bodyParser = require('body-parser');
 var axios = require('axios');
 var path = require('path');
-let Dictionary = require('oxford-dictionary');
+var request = require('request');
+let oxford = require('oxford-dictionaries-api');
+var https = require('https');
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
 
 let appId = require('./config').appId;
 let appKey = require('./config').appKey;
 
-let config = {
-	app_id: appId,
-	app_key: appKey,
-	source_lang: 'en'
-};
-
-var dict = new Dictionary(config);
-
-app.get('/', (req, res) => {
-	res.render('index.html');
+// currently testing out new npm package that is wrapper for oxford dictionary API
+let oxforddictionaries = new oxford(appId, appKey);
+oxforddictionaries.entries({ word_id: 'box' }).then(data => {
+	data.results.forEach(datum => {
+		datum.lexicalEntries.forEach(entry => {});
+	});
 });
 
-app.get('/lookup', (req, res) => {
-	var lookup = dict.definitions(req.query.word.toLowerCase());
-	console.log(`lookup is: ${lookup}`);
-	lookup.then(
-		response => {
-			console.log('response is:', response);
-			for (var i = 0; i < response.results[0].lexicalEntries.length; i++) {
-				console.log(response.results[0].lexicalEntries[i].entries[0].senses[0].definitions[0].definitions);
-			}
-			var examples = dict.examples(req.query.word.toLowerCase());
-			examples.then(examplesResponse => {
-				var examplesAndDef = response.results.concat(examplesResponse);
-				res.json(examplesAndDef);
-			});
-		},
-		err => {
-			res.send(err);
-			console.log(`err is: ${err}`);
-		}
-	);
-});
+// To run when testing API call directly without npm wrappers
+// request(options2, callback);
 
-var server = app.listen(8080);
+var server = app.listen(3000, () => {
+	console.log('server started');
+});

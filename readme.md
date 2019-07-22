@@ -7,3 +7,5 @@ TODO:
 - parse response from API
 - in API response, some definitions don't have .
 - create markup to present resposne from API to screen
+
+Each example and definition has an id. We'd need to match these up in order to place them together.
