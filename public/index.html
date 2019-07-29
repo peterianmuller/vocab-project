@@ -6,9 +6,11 @@
 		<title></title>
 	</head>
 	<body>
-		<input type="text" name="word-to-search" placeholder="put word here!" spellcheck="true" />
-		<label for="word-to-search"></label>
-		<button>Grab the data!</button>
+		<form method="get" action="/lookup">
+			<input type="text" name="word" placeholder="put word here!" spellcheck="true" />
+			<label for="word-to-search"></label>
+			<button>Grab the data!</button>
+		</form>
 
 		<section class="words-container"></section>
 
