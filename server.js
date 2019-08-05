@@ -24,28 +24,33 @@ app.get('/lookup', (req, res) => {
 		.then(data => {
 			// console.log(data);
 			// create a new data set that shows the word
-			let wordInfo = {};
+			let wordInfo = { definitions: [] };
 			//console.log('data is:', data);
 			data.results.forEach(datum => {
 				// from here I can grab the language
 				//console.log('datum is:', datum);
 				wordInfo.language = datum.language;
 				datum.lexicalEntries.forEach(entry => {
+					let wordViaCategory = { partOfSpeech: entry.lexicalCategory.text };
+					// each of these is a new definition per part of speech
 					entry.entries.forEach(example => {
 						// console.log('example is: ', example);
+						let definitions = { senses: [] };
 						example.senses.forEach(sense => {
-							//	if (!sense.subsenses) console.log('sense is: ', sense);
+							definitions.senses.push(sense.definitions);
 							if (sense.subsenses) {
+								definitions.subsenses = [];
 								sense.subsenses.forEach(subsense => {
-									//	console.log('sense is:', sense);
-									//	console.log('subsense is:', subsense);
+									definitions.subsenses.push(subsense.definitions);
 								});
 							}
+							wordViaCategory.definitions = definitions;
 						});
 					});
+					wordInfo.definitions.push(wordViaCategory);
 				});
 			});
-
+			//res.send(data);
 			res.render('results', { word: data, wordInfo: wordInfo });
 		})
 		.catch(error => {

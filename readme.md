@@ -4,8 +4,9 @@ As an mvp, this app should allow users to look up definitions and usages of new 
 
 TODO:
 
-- parse response from API
+- parse response from API - Massage data to give us words and definitions only. Not tripping for now about word origin, etc
 - in API response, some definitions don't have .
 - create markup to present resposne from API to screen
+- Think about using Oxford for Spanish also
 
 Each example and definition has an id. We'd need to match these up in order to place them together.
